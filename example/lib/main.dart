@@ -1,15 +1,17 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:twinkle_button/twinkle_button.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatefulWidget {
+  const MyApp({super.key});
+
   @override
-  _MyAppState createState() => _MyAppState();
+  State<MyApp> createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
-
   @override
   void initState() {
     super.initState();
@@ -19,28 +21,21 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(
-          title: Text('Twinkle Button'),
-        ),
+        appBar: AppBar(title: Text('Twinkle Button')),
         body: Column(
           children: <Widget>[
             Expanded(
               flex: 1,
               child: Center(
                 child: TwinkleButton(
-                    buttonTitle: Text(
-                      'Download',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w700,
-                        fontSize: 17.0,
-                      ),
-                    ),
-                    buttonColor: Color(0xffFF4758),
-                    twinkleTime: 100,
-                    onclickButtonFunction: () {
+                  buttonTitle: Text('Download', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700, fontSize: 17.0)),
+                  buttonColor: Color(0xffFF4758),
+                  twinkleTime: 100,
+                  onclickButtonFunction: () {
+                    if (kDebugMode) {
                       print('hello');
                     }
+                  },
                 ),
               ),
             ),
@@ -48,18 +43,13 @@ class _MyAppState extends State<MyApp> {
               flex: 1,
               child: Center(
                 child: TwinkleButton(
-                    buttonTitle: Text(
-                      'Subscribe with Free Trial',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w300,
-                        fontSize: 17.0,
-                      ),
-                    ),
-                    buttonColor: Color(0xff3dce89),
-                    onclickButtonFunction: () {
+                  buttonTitle: Text('Subscribe with Free Trial', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w300, fontSize: 17.0)),
+                  buttonColor: Color(0xff3dce89),
+                  onclickButtonFunction: () {
+                    if (kDebugMode) {
                       print('hello');
                     }
+                  },
                 ),
               ),
             ),
