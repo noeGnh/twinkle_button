@@ -55,15 +55,7 @@ class Shimmer extends StatefulWidget {
   final int loop;
   final bool enabled;
 
-  const Shimmer({
-    Key? key,
-    required this.child,
-    required this.gradient,
-    this.direction = ShimmerDirection.ltr,
-    this.period = const Duration(milliseconds: 1500),
-    this.loop = 0,
-    this.enabled = true,
-  }) : super(key: key);
+  const Shimmer({super.key, required this.child, required this.gradient, this.direction = ShimmerDirection.ltr, this.period = const Duration(milliseconds: 1500), this.loop = 0, this.enabled = true});
 
   ///
   /// A convenient constructor provides an easy and convenient way to create a
@@ -71,7 +63,7 @@ class Shimmer extends StatefulWidget {
   /// `highlightColor`.
   ///
   Shimmer.fromColors({
-    Key? key,
+    super.key,
     required this.child,
     required Color baseColor,
     required Color highlightColor,
@@ -79,12 +71,15 @@ class Shimmer extends StatefulWidget {
     this.direction = ShimmerDirection.ltr,
     this.loop = 0,
     this.enabled = true,
-  })  : gradient = LinearGradient(
-            begin: Alignment.topLeft, end: Alignment.centerRight, colors: <Color>[baseColor, baseColor, highlightColor, baseColor, baseColor], stops: const <double>[0.0, 0.35, 0.5, 0.65, 1.0]),
-        super(key: key);
+  }) : gradient = LinearGradient(
+         begin: Alignment.topLeft,
+         end: Alignment.centerRight,
+         colors: <Color>[baseColor, baseColor, highlightColor, baseColor, baseColor],
+         stops: const <double>[0.0, 0.35, 0.5, 0.65, 1.0],
+       );
 
   @override
-  _ShimmerState createState() => _ShimmerState();
+  State<Shimmer> createState() => _ShimmerState();
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -104,18 +99,17 @@ class _ShimmerState extends State<Shimmer> with SingleTickerProviderStateMixin {
   void initState() {
     super.initState();
     _count = 0;
-    _controller = AnimationController(vsync: this, duration: widget.period)
-      ..addStatusListener((AnimationStatus status) {
-        if (status != AnimationStatus.completed) {
-          return;
-        }
-        _count = _count! + 1;
-        if (widget.loop <= 0) {
-          _controller.repeat();
-        } else if (_count! < widget.loop) {
-          _controller.forward(from: 0.0);
-        }
-      });
+    _controller = AnimationController(vsync: this, duration: widget.period)..addStatusListener((AnimationStatus status) {
+      if (status != AnimationStatus.completed) {
+        return;
+      }
+      _count = _count! + 1;
+      if (widget.loop <= 0) {
+        _controller.repeat();
+      } else if (_count! < widget.loop) {
+        _controller.forward(from: 0.0);
+      }
+    });
     if (widget.enabled) {
       _controller.forward();
     }
@@ -136,13 +130,7 @@ class _ShimmerState extends State<Shimmer> with SingleTickerProviderStateMixin {
     return AnimatedBuilder(
       animation: _controller,
       child: widget.child,
-      builder: (BuildContext context, Widget? child) => _Shimmer(
-        child: child,
-        direction: widget.direction,
-        gradient: widget.gradient,
-        percent: _controller.value,
-        enabled: widget.enabled,
-      ),
+      builder: (BuildContext context, Widget? child) => _Shimmer(direction: widget.direction, gradient: widget.gradient, percent: _controller.value, enabled: widget.enabled, child: child),
     );
   }
 
@@ -160,13 +148,7 @@ class _Shimmer extends SingleChildRenderObjectWidget {
   final Gradient? gradient;
   final bool? enabled;
 
-  const _Shimmer({
-    Widget? child,
-    this.percent,
-    this.direction,
-    this.gradient,
-    this.enabled,
-  }) : super(child: child);
+  const _Shimmer({super.child, this.percent, this.direction, this.gradient, this.enabled});
 
   @override
   _ShimmerFilter createRenderObject(BuildContext context) {
